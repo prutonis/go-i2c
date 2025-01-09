@@ -2,7 +2,7 @@
 //
 // Before usage you should load the i2c-dev kernel module
 //
-//      sudo modprobe i2c-dev
+//	sudo modprobe i2c-dev
 //
 // Each i2c bus can address 127 independent i2c devices, and most
 // linux systems contain several buses.
@@ -236,7 +236,7 @@ func (v *I2C) WriteRegS16LE(reg byte, value int16) error {
 }
 
 func ioctl(fd, cmd, arg uintptr) error {
-	_, _, err := syscall.Syscall6(syscall.SYS_IOCTL, fd, cmd, arg, 0, 0, 0)
+	_, _, err := syscall.SyscallN(syscall.SYS_IOCTL, fd, uintptr(cmd), arg, 0, 0, 0)
 	if err != 0 {
 		return err
 	}
