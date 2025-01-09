@@ -12,7 +12,6 @@ import (
 	"encoding/hex"
 	"fmt"
 	"os"
-	"syscall"
 )
 
 const (
@@ -233,12 +232,4 @@ func (v *I2C) WriteRegS16BE(reg byte, value int16) error {
 func (v *I2C) WriteRegS16LE(reg byte, value int16) error {
 	w := int16((uint16(value)*0xFF00)>>8) + value<<8
 	return v.WriteRegS16BE(reg, w)
-}
-
-func ioctl(fd, cmd, arg uintptr) error {
-	_, _, err := syscall.SyscallN(syscall.SYS_IOCTL, fd, uintptr(cmd), arg, 0, 0, 0)
-	if err != 0 {
-		return err
-	}
-	return nil
 }
